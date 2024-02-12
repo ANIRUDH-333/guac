@@ -33,6 +33,9 @@ import (
 	"github.com/guacsec/guac/pkg/assembler"
 	"github.com/guacsec/guac/pkg/handler/processor"
 	"github.com/guacsec/guac/pkg/ingestor/parser/common"
+	// "github.com/guacsec/guac/pkg/ingestor/verifier"
+	// "github.com/sigstore/sigstore/pkg/cryptoutils"
+
 	// "github.com/guacsec/guac/pkg/logging"
 	"github.com/secure-systems-lab/go-securesystemslib/dsse"
 )
@@ -159,26 +162,26 @@ DwIDAQAB
 // func (d *dsseParser) getIdentity(ctx context.Context) error {
 // 	// TODO (pxp928): enable dsse verification once the identity and key management is finalized
 // 	// See issue: https://github.com/guacsec/guac/issues/75 and https://github.com/guacsec/guac/issues/443
-// 	//  identities, err := verifier.VerifyIdentity(ctx, d.doc)
-// 	// if err != nil {
-// 	// 	return fmt.Errorf("failed to verify identity: %w", err)
-// 	// }
-// 	// for _, i := range identities {
-// 	// 	if i.Verified {
-// 	// 		pemBytes, err := cryptoutils.MarshalPublicKeyToPEM(i.Key.Val)
-// 	// 		if err != nil {
-// 	// 			return fmt.Errorf("MarshalPublicKeyToPEM returned error: %w", err)
-// 	// 		}
-// 	// 		// TODO: change this to new TrustInformation struct by resolving https://github.com/guacsec/guac/issues/75
-// 	// 		// d.identities = append(d.identities, common.TrustInformation{
-// 	// 		// 	ID: i.ID, Digest: i.Key.Hash, Key: base64.StdEncoding.EncodeToString(pemBytes),
-// 	// 		// 	KeyType: string(i.Key.Type), KeyScheme: string(i.Key.Scheme), NodeData: *assembler.NewObjectMetadata(d.doc.SourceInformation)})
-// 	// 		_ = pemBytes
-// 	// 	} else {
-// 	// 		logger := logging.FromContext(ctx)
-// 	// 		logger.Errorf("failed to verify DSSE with provided key: %v", i.ID)
-// 	// 	}
-// 	// } 
+// // 	 identities, err := verifier.VerifyIdentity(ctx, d.doc)
+// // 	if err != nil {
+// // 		return fmt.Errorf("failed to verify identity: %w", err)
+// // 	}
+// // 	for _, i := range identities {
+// // 		if i.Verified {
+// // 			pemBytes, err := cryptoutils.MarshalPublicKeyToPEM(i.Key.Val)
+// // 			if err != nil {
+// // 				return fmt.Errorf("MarshalPublicKeyToPEM returned error: %w", err)
+// // 			}
+// // 			// TODO: change this to new TrustInformation struct by resolving https://github.com/guacsec/guac/issues/75
+// // 			// d.identities = append(d.identities, common.TrustInformation{
+// // 			// 	ID: i.ID, Digest: i.Key.Hash, Key: base64.StdEncoding.EncodeToString(pemBytes),
+// // 			// 	KeyType: string(i.Key.Type), KeyScheme: string(i.Key.Scheme), NodeData: *assembler.NewObjectMetadata(d.doc.SourceInformation)})
+// // 			_ = pemBytes
+// // 		} else {
+// // 			logger := logging.FromContext(ctx)
+// // 			logger.Errorf("failed to verify DSSE with provided key: %v", i.ID)
+// // 		}
+// // 	} 
 // 	logger := logging.FromContext(ctx)
 // 	logger.Warn("DSSE verification currently not implemented in this release. Continuing without DSSE verification")
 // 	return nil
