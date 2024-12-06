@@ -18,6 +18,7 @@ package parser
 import (
 	"context"
 	"fmt"
+	"log"
 	"sync"
 
 	"github.com/guacsec/guac/pkg/assembler"
@@ -88,6 +89,7 @@ func ParseDocumentTree(ctx context.Context, docTree processor.DocumentTree, scan
 	docTreeBuilder := newDocTreeBuilder()
 
 	logger.Debugf("parsing document tree with root type: %v", docTree.Document.Type)
+	log.Default().Println("------------------------------", "calling parse")
 	err := docTreeBuilder.parse(ctx, docTree, map[visitedKey]bool{})
 	if err != nil {
 		return nil, nil, err
@@ -206,6 +208,7 @@ type visitedKey struct {
 
 // The visited map is used to keep track of the document nodes that have already been visited to avoid infinite loops.
 func (t *docTreeBuilder) parse(ctx context.Context, root processor.DocumentTree, visited map[visitedKey]bool) error {
+	log.Default().Println("------------------------------", "calling parseHelper")
 	builder, err := parseHelper(ctx, root.Document)
 	if err != nil {
 		return err
@@ -235,6 +238,7 @@ func parseHelper(ctx context.Context, doc *processor.Document) (*common.GraphBui
 	}
 
 	p := pFunc()
+	log.Default().Println("------------------------------", "calling Parse impl       ")
 	err := p.Parse(ctx, doc)
 	if err != nil {
 		return nil, err
