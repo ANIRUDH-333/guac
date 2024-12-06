@@ -34,6 +34,10 @@ import (
 	"github.com/guacsec/guac/pkg/handler/processor"
 	"github.com/guacsec/guac/pkg/handler/processor/process"
 	"github.com/guacsec/guac/pkg/ingestor"
+	"github.com/guacsec/guac/pkg/ingestor/key"
+	"github.com/guacsec/guac/pkg/ingestor/key/kms"
+	"github.com/guacsec/guac/pkg/ingestor/verifier"
+	"github.com/guacsec/guac/pkg/ingestor/verifier/sigstore_verifier"
 	"github.com/guacsec/guac/pkg/logging"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -73,6 +77,20 @@ func ingest(cmd *cobra.Command, args []string) {
 	ctx, cf := context.WithCancel(logging.WithLogger(context.Background()))
 	logger := logging.FromContext(ctx)
 	transport := cli.HTTPHeaderTransport(ctx, opts.headerFile, http.DefaultTransport)
+
+	// Register KMS key provider
+	kms := kms.NewKmsProvider()
+	err = key.RegisterKeyProvider(kms, kms.Type())
+	if err != nil {
+		logger.Fatalf("unable to register key provider: %v", err)
+	}
+
+	// Register Verifier
+	sigstoreAndKeyVerifier := sigstore_verifier.NewSigstoreAndKeyVerifier()
+	err = verifier.RegisterVerifier(sigstoreAndKeyVerifier, sigstoreAndKeyVerifier.Type())
+	if err != nil {
+		logger.Fatalf("unable to register key provider: %v", err)
+	}
 
 	if strings.HasPrefix(opts.pubsubAddr, "nats://") {
 		// initialize jetstream

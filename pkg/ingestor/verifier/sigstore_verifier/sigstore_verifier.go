@@ -46,6 +46,7 @@ func NewSigstoreAndKeyVerifier() *sigstoreVerifier {
 func (d *sigstoreVerifier) Verify(ctx context.Context, payloadBytes []byte) ([]verifier.Identity, error) {
 	identities := []verifier.Identity{}
 	envelope, err := parseDSSE(payloadBytes)
+
 	if err != nil {
 		return nil, err
 	}

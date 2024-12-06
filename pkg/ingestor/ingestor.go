@@ -18,7 +18,6 @@ package ingestor
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -170,7 +169,6 @@ func GetProcessor(ctx context.Context) func(*processor.Document) (processor.Docu
 }
 
 func GetIngestor(ctx context.Context, scanForVulns bool, scanForLicense bool, scanForEOL bool, scanForDepsDev bool) func(processor.DocumentTree) ([]assembler.IngestPredicates, []*parser_common.IdentifierStrings, error) {
-	log.Default().Println("------------------------------", "calling ParseDocumentTree")
 	return func(doc processor.DocumentTree) ([]assembler.IngestPredicates, []*parser_common.IdentifierStrings, error) {
 		return parser.ParseDocumentTree(ctx, doc, scanForVulns, scanForLicense, scanForEOL, scanForDepsDev)
 	}
